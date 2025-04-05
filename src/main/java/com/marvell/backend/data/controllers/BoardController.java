@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(path = "/board")
 @RequiredArgsConstructor
@@ -24,7 +26,7 @@ public class BoardController {
     private final BoardService boardService;
 
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    
     @GetMapping
     public ResponseEntity<List<BoardModel>> getAllBoards(@RequestParam String name){
         List<BoardModel> allBoardModels = boardService.getAllBoards(name);
@@ -32,9 +34,12 @@ public class BoardController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @GetMapping("/model/{boardModelId}")
-    public List<BoardStateDTO> getBoardNamesAndStates(@PathVariable Long boardModelId) {
-        return boardService.getBoardNamesAndStatesByModelId(boardModelId);
+    public ResponseEntity<Page<BoardStateDTO>> getBoardStates(
+            @PathVariable Long boardModelId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(boardService.getBoardNamesAndStatesByModelId(boardModelId, page, size));
     }
 }
