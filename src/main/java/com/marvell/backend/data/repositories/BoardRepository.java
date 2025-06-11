@@ -22,4 +22,10 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
            "JOIN GlpiState s ON b.statesId = s.id " +
            "WHERE b.pluginGenericobjectBoardmodelsId = :boardModelId")
     Page<BoardStateDTO> findBoardNamesAndStatesByModelId(@Param("boardModelId") Long boardModelId, Pageable pageable);
+
+    @Query("SELECT new com.marvell.backend.data.dto.BoardStateDTO(b.name, s.completename) " +
+       "FROM Board b " +
+       "JOIN GlpiState s ON b.statesId = s.id")
+    Page<BoardStateDTO> findAllBoardNamesAndStates(Pageable pageable);
+
 }

@@ -39,6 +39,10 @@ public class BoardService {
         return boardRepository.findBoardNamesAndStatesByModelId(boardModelId, PageRequest.of(page, size));
     }
 
+    public Page<BoardStateDTO> getAllBoardNamesAndStates(int page, int size) {
+        return boardRepository.findAllBoardNamesAndStates(PageRequest.of(page, size));
+    }
+
 
 
 }

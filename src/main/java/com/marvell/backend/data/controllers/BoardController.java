@@ -34,7 +34,6 @@ public class BoardController {
     }
 
 
-
     @GetMapping("/model/{boardModelId}")
     public ResponseEntity<Page<BoardStateDTO>> getBoardStates(
             @PathVariable Long boardModelId,
@@ -42,4 +41,12 @@ public class BoardController {
             @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok(boardService.getBoardNamesAndStatesByModelId(boardModelId, page, size));
     }
+
+    @GetMapping("/model")
+    public ResponseEntity<Page<BoardStateDTO>> getAllBoardStates(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size) {
+    return ResponseEntity.ok(boardService.getAllBoardNamesAndStates(page, size));
+}
+
 }
